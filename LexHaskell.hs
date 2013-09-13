@@ -57,3 +57,103 @@ obtenerSeparadores s cant ban =
 								then [(take (cant-ban) s)] ++ obtenerSeparadores(drop (cant+1) s) 0 ban
 								else obtenerSeparadores(drop (cant+1) s) 0 ban   
 						else obtenerSeparadores(drop (cant+1) s) 0 ban
+
+analizar :: String -> String
+analizar "auto"     = "AUTO"
+analizar "break"    = "BREAK"
+analizar "case"     = "CASE"  
+analizar "char"     = "TIPO_CHAR"
+analizar "const"    = "CONST"
+analizar "continue" = "CONTINUE"
+analizar "default"  = "DEFAULT"
+analizar "do"       = "DO"
+analizar "double"   = "DOUBLE"
+analizar "else"     = "FIN CONDICIONAL"
+analizar "enum"     = "ENUMERADO"
+analizar "extern"   = "EXTERN"
+analizar "float"    = "TIPO_FLOAT"
+analizar "for"      = "SENTENCIA ITERATIVA FOR"
+analizar "goto"     = "GOTO"
+analizar "if"       = "CONDICIONAL"
+analizar "int"      = "TIPO_INT"
+analizar "long"     = "TIPO_LONG"
+analizar "register" = "REGISTER"
+analizar "return"   = "RETURN"
+analizar "short"    = "SHORT"
+analizar "signed"   = "SIGNED"
+analizar "sizeof"   = "SIZEOF"
+analizar "static"   = "STATIC"
+analizar "struct"   = "STRUCT"
+analizar "switch"   = "SWITCH"
+analizar "typedef"  = "TYPEDEF"
+analizar "union"    = "UNION"
+analizar "unsigned" = "UNSIGNED"
+analizar "void"     = "VOID"
+analizar "volatile" = "VOLATILE"
+analizar "while"    = "SENTENCIA ITERATIVA WHILE"
+analizar "..."      = "ELIPSE"
+analizar "++"       = "MAS UNO"
+analizar "--"       = "MENOS UNO"
+analizar "->"       = "PUNTERO"
+analizar "&&"       = "Y"
+analizar "||"       = "O"
+analizar "<="       = "MENOR O IGUAL"
+analizar ">="       = "MAYOR O IGUAL"
+analizar "=="       = "ES IGUAL A"
+analizar "!="       = "NO ES IGUAL A"
+analizar ";"        = ";"
+analizar "{"        = "{"
+analizar "}"        = "{"
+analizar ","        = ","
+analizar ":"        = ":"
+analizar "="        = "="
+analizar "("        = "("
+analizar ")"        = "("
+analizar "["        = "["
+analizar "]"        = "["
+analizar "."        = "."
+analizar "&"        = "&"
+analizar "!"        = "!"
+analizar "~"        = "~"
+analizar "-"        = "-"
+analizar "+"        = "+"
+analizar "*"        = "*"
+analizar "/"        = "/"
+analizar "%"        = "%"
+analizar "<"        = "<"
+analizar ">"        = "<"
+analizar "^"        = "^"
+analizar "|"        = "|"
+analizar "?"        = "?"
+analizar p =  if(esNumeroEntero p)
+		then "NUMERO ENTERO"
+		else if(esNumeroFraccional p)
+		     then "NUMERO PUNTO FLOTANTE"
+			else "IDENTIFICADOR"        
+    
+
+
+esNumeroEntero :: String -> Bool
+esNumeroEntero "" = True
+esNumeroEntero x = if(isDigit(head x))
+		then esNumeroEntero (tail x)
+		else False
+
+
+
+esNumeroFraccional :: String-> Bool
+esNumeroFraccional x = esNumeroFraccional' x 0
+				
+esNumeroFraccional' :: String -> Int -> Bool
+esNumeroFraccional' "" 0= False
+esNumeroFraccional' "" 1 = True
+esNumeroFraccional' x 0= if(isDigit(head x))
+		then esNumeroFraccional' (tail x) 0
+		else if((head x)== '.')
+		      then esNumeroFraccional' (tail x) 1
+		      else False
+esNumeroFraccional' x 1= if(isDigit(head x))
+		then esNumeroFraccional' (tail x) 1
+		else if((head x)== '.')
+		      then False
+		      else False		     
