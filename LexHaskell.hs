@@ -1,5 +1,15 @@
 import Data.Char
 
+
+main = do
+   putStrLn "Ingrese ruta del archivo"
+   ruta <- getLine
+   content <- readFile (ruta)
+   let final = lexA content
+   print final
+   
+
+
 obtenerNumeros :: String -> Int -> [String]
 obtenerNumeros "" cant = []
 obtenerNumeros x cant = 
@@ -14,8 +24,8 @@ obtenerNumeros x cant =
 							if(not(elem (take (cant-1) (tail x)) (obtenerNumeros (drop cant x) 0)))
 								then [(take (cant-1) (tail x))] ++ obtenerNumeros (drop cant x) 0
 								else obtenerNumeros (drop cant x) 0
-					else obtenerNumeros (drop (cant+1) x) 0							
-					
+					else obtenerNumeros (drop (cant+1) x) 0					
+
 obtenerPalabras :: String -> Int -> Int ->	[String]
 obtenerPalabras "" cant ban = []
 obtenerPalabras s cant ban =
@@ -39,6 +49,7 @@ obtenerPalabras s cant ban =
 							then obtenerPalabras s (cant+1) 1
 							else obtenerPalabras(drop (cant+1) s) 0 ban
 
+							
 obtenerSeparadores :: String -> Int -> Int -> [String]
 obtenerSeparadores "" cant ban = []
 obtenerSeparadores s cant ban =
@@ -56,6 +67,7 @@ obtenerSeparadores s cant ban =
 							if(not(elem (take (cant-ban) s) (obtenerSeparadores(drop (cant+1) s) 0 ban))) 
 								then [(take (cant-ban) s)] ++ obtenerSeparadores(drop (cant+1) s) 0 ban
 								else obtenerSeparadores(drop (cant+1) s) 0 ban   
+
 						else obtenerSeparadores(drop (cant+1) s) 0 ban
 
 analizar :: String -> String
@@ -101,23 +113,23 @@ analizar "<="       = "MENOR O IGUAL"
 analizar ">="       = "MAYOR O IGUAL"
 analizar "=="       = "ES IGUAL A"
 analizar "!="       = "NO ES IGUAL A"
-analizar ";"        = ";"
-analizar "{"        = "{"
-analizar "}"        = "{"
-analizar ","        = ","
-analizar ":"        = ":"
-analizar "="        = "="
-analizar "("        = "("
-analizar ")"        = "("
-analizar "["        = "["
-analizar "]"        = "["
-analizar "."        = "."
-analizar "&"        = "&"
-analizar "!"        = "!"
+analizar ";"        = "PUNTO Y COMA"
+analizar "{"        = "LLAVE ABIERTA"
+analizar "}"        = "LLAVE CERRADA"
+analizar ","        = "COMA"
+analizar ":"        = "DOS PUNTOS"
+analizar "="        = "IGUAL"
+analizar "("        = "PARENTESIS ABIERTO"
+analizar ")"        = "PARENTESIS CERRADO"
+analizar "["        = "CORCHETE ABIERTO"
+analizar "]"        = "CORCHETE CERRADO"
+analizar "."        = "PUNTO"
+analizar "&"        = "AMPERSAND"
+analizar "!"        = "INTERROGACION_POSITIVO"
 analizar "~"        = "~"
-analizar "-"        = "-"
-analizar "+"        = "+"
-analizar "*"        = "*"
+analizar "-"        = "MENOS"
+analizar "+"        = "MAS"
+analizar "*"        = "POR"
 analizar "/"        = "/"
 analizar "%"        = "%"
 analizar "<"        = "<"
@@ -168,5 +180,7 @@ esString s= if(isAlphaNum(head s))
 analizado :: String -> [String]
 analizado p = (obtenerNumeros p 0) ++ (obtenerPalabras p 0 0) ++ (obtenerSeparadores p 0 0)
 
+lexA :: String -> [(String, String)]
+lexA s = map (\x -> (x, analizar x)) $ analizado s
 
-		      		     
+ 	     		
