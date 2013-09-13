@@ -129,8 +129,9 @@ analizar p =  if(esNumeroEntero p)
 		then "NUMERO ENTERO"
 		else if(esNumeroFraccional p)
 		     then "NUMERO PUNTO FLOTANTE"
-			else "IDENTIFICADOR"        
-    
+			else if(esString p)
+			     then "IDENTIFICADOR STRING"        
+                             else "INVALIDO" 
 
 
 esNumeroEntero :: String -> Bool
@@ -156,4 +157,16 @@ esNumeroFraccional' x 1= if(isDigit(head x))
 		then esNumeroFraccional' (tail x) 1
 		else if((head x)== '.')
 		      then False
-		      else False		     
+		      else False
+
+esString :: String -> Bool
+esString "" = True
+esString s= if(isAlphaNum(head s))
+            then esString (tail s)
+	    else False
+
+analizado :: String -> [String]
+analizado p = (obtenerNumeros p 0) ++ (obtenerPalabras p 0 0) ++ (obtenerSeparadores p 0 0)
+
+
+		      		     
