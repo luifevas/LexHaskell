@@ -2,7 +2,7 @@ int main ()
     { 
         int i ,  sum=0 ; 
        
-        for (i=1;  i<=LAST;  i++ ) {
+        for (i=1.2;  i<=LAST;  i++ ) {
           sum += i ;
         }  
         printf ("sum = %d\n" ,  sum ) ; 
