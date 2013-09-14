@@ -100,13 +100,19 @@ analizar ">"        = "<"
 analizar "^"        = "^"
 analizar "|"        = "|"
 analizar "?"        = "?"
+analizar "\n"       = "SALTO DE LINEA"
+analizar "+="       ="MASIGUAL"
+
 analizar p =  if(esNumeroEntero p)
 		then "NUMERO ENTERO"
 		else if(esNumeroFraccional p)
 		     then "NUMERO PUNTO FLOTANTE"
-			else if(esString p)
-			     then "IDENTIFICADOR STRING"        
-                             else "INVALIDO" 
+			else if(esIdentificador p)
+			     then "IDENTIFICADOR"        
+                             else if(esString p 0)
+				then "STRING"
+				    else "INVALIDO"
+
 
 
 esNumeroEntero :: String -> Bool
@@ -134,12 +140,20 @@ esNumeroFraccional' x 1= if(isDigit(head x))
 		      then False
 		      else False
 
-esString :: String -> Bool
-esString "" = True
-esString s= if(isAlphaNum(head s))
-            then esString (tail s)
+esIdentificador :: String -> Bool
+esIdentificador "" = True
+esIdentificador s= if(isAlphaNum(head s))
+            then esIdentificador (tail s)
 	    else False
-
+esString :: String -> Int -> Bool
+esString "" 2 = True
+esString "" 1 = False
+esString "" 0 = False
+esString s x= if(x>2)
+		then False
+		 else if((head s)== '"')
+			then esString (tail s) (x+1)
+			else esString(tail s) (x)
 analizado :: String -> [String]
 analizado p = obtenerLexemes p 0 0 0
 
