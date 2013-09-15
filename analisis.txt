@@ -1,3 +1,13 @@
+
+,  SALTO DE LINEA
+/*hola mundo estoy aqui jajajaja */,  INVALIDO
+
+,  SALTO DE LINEA
+
+,  SALTO DE LINEA
+//mi nombre es andres,  INVALIDO
+
+,  SALTO DE LINEA
 int,  TIPO_INT
 main,  IDENTIFICADOR
 (,  PARENTESIS ABIERTO

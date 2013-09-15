@@ -17,25 +17,34 @@ main = do
 obtenerLexemes :: String -> Int -> Int-> Int -> [String]
 obtenerLexemes "" cant ban tipo = []
 obtenerLexemes s cant ban tipo =
-	if((isLetter(s!!cant) || isNumber(s!!cant) || s!!cant=='.') && ban==0 && tipo==0)
+	if(s!!cant=='/'&&s!!(cant+1)=='/'&&tipo==0)
+		then obtenerLexemes (drop (cant) s) 0 0 3
+	else if(s!!cant=='\n' && tipo==3)
+		then [(take (cant) (s))] ++ obtenerLexemes (drop (cant+1) s) 0 0 0
+	else if(s!!cant=='/' && s!!(cant+1)=='*'&&tipo==0)
+		then obtenerLexemes (drop (cant) s) 0 0 2
+	else if(s!!(cant)=='*' && s!!(cant+1)=='/' && tipo==2)
+		then [(take (cant+2) (s))] ++ obtenerLexemes (drop (cant+2) s) 0 0 0
+	else if(tipo>1)
+		then obtenerLexemes s (cant+1) 0 tipo	
+	else if((isLetter(s!!cant) || isNumber(s!!cant) || s!!cant=='.') && ban==0 && tipo==0)	
 		then obtenerLexemes s (cant+1) 0 0
-		else if(s!!0=='"' && ban==0)
-			then obtenerLexemes s (cant+1) 1 0
-			else if(s!!cant=='"' && ban==1)
-				then [(take (cant+1) (s))] ++ obtenerLexemes (drop (cant+1) s) 0 0 0
-				else if(cant/=0 && ban==0 && tipo==0)
-					then [(take (cant) (s))] ++ obtenerLexemes (drop cant s) 0 0 0
-					else if(ban==1)
-						then obtenerLexemes s  (cant+1) 1 0
-						else if(not(isLetter(s!!cant)) && not(isNumber(s!!cant)) && s!!cant/=' ' && s!!cant/='"' && ban==0 && cant<2)
-							then obtenerLexemes s (cant+1) 0 1
-							else
-								if(cant>0)
-									then 
-										if(((s!!0==s!!cant &&(s!!0=='&' || s!!0=='|')) || s!!0=='<' || s!!0=='>' || s!!0=='!' || s!!0=='+' || s!!0=='-') || cant==1)
-											then [take (cant) (s)] ++ obtenerLexemes (drop cant s) 0 0 0
-											else [take (cant-1) s] ++ obtenerLexemes (drop (cant-1) s ) 0 0 0
-									else obtenerLexemes (tail s) 0 0 0			
+	else if(s!!0=='"' && ban==0)
+		then obtenerLexemes s (cant+1) 1 0
+	else if(s!!cant=='"' && ban==1)
+		then [(take (cant+1) (s))] ++ obtenerLexemes (drop (cant+1) s) 0 0 0
+	else if(cant/=0 && ban==0 && tipo==0)
+		then [(take (cant) (s))] ++ obtenerLexemes (drop cant s) 0 0 0
+	else if(ban==1)
+		then obtenerLexemes s  (cant+1) 1 0
+	else if(not(isLetter(s!!cant)) && not(isNumber(s!!cant)) && s!!cant/=' ' && s!!cant/='"' && ban==0 && cant<2)
+		then obtenerLexemes s (cant+1) 0 1
+	else if(cant>0)
+		then 
+			if(((s!!0==s!!cant &&(s!!0=='&' || s!!0=='|')) || s!!0=='<' || s!!0=='>' || s!!0=='!' || s!!0=='+' || s!!0=='-') || cant==1)
+				then [take (cant) (s)] ++ obtenerLexemes (drop cant s) 0 0 0
+			else [take (cant-1) s] ++ obtenerLexemes (drop (cant-1) s ) 0 0 0
+	else obtenerLexemes (tail s) 0 0 0			
 
 analizar :: String -> String
 analizar "auto"     = "AUTO"
