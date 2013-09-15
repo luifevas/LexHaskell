@@ -116,19 +116,20 @@ analizar "?"        = "?"
 analizar "\n"       = "SALTO DE LINEA"
 analizar "+="       ="MASIGUAL"
 
-analizar p =  if(esNumeroEntero p)
+analizar p = 
+	if(esNumeroEntero p)
 		then "NUMERO ENTERO"
-		else if(esNumeroFraccional p)
-		     then "NUMERO PUNTO FLOTANTE"
-			else if(esIdentificador p)
-			     then "IDENTIFICADOR"        
-                             else if(esString p 0)
-				then "STRING"
-				  else if(esComentarioGlobal p 0 0)
-					then "COMENTARIO GLOBAL"
-					 else if (esComentarioNormal p 0)
-				           then "COMENTARIO NORMAL"
-				              else "INVALIDO"
+	else if(esNumeroFraccional p)
+	    then "NUMERO PUNTO FLOTANTE"
+	else if(esIdentificador p)
+	    then "IDENTIFICADOR"        
+    else if(esString p 0)
+		then "STRING"
+	else if (esComentarioNormal p 0)
+	    then "COMENTARIO NORMAL"
+	else if(esComentarioGlobal p 0 0)
+		then "COMENTARIO GLOBAL"
+	else "INVALIDO"
 
 
 
@@ -191,13 +192,8 @@ esComentarioGlobal x 1 1 = if((head x)=='*')
 esComentarioGlobal x 2 1 = True
 
 esComentarioNormal :: String -> Int -> Bool
-esComentarioNormal x 2 = True
-esComentarioNormal x s =  if(s>2)
-		           then False
-			     else if((head x)== '/')
-				  then esComentarioNormal (tail x) (s+1)
-					else False
-
-
-
-     		
+esComentarioNormal x s =  
+    if(x!!0== '/' && x!!1=='/')
+		then True
+	else False
+	
