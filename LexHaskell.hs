@@ -124,7 +124,11 @@ analizar p =  if(esNumeroEntero p)
 			     then "IDENTIFICADOR"        
                              else if(esString p 0)
 				then "STRING"
-				    else "INVALIDO"
+				  else if(esComentarioGlobal p 0 0)
+					then "COMENTARIO GLOBAL"
+					 else if (esComentarioNormal p 0)
+				           then "COMENTARIO NORMAL"
+				              else "INVALIDO"
 
 
 
@@ -185,6 +189,14 @@ esComentarioGlobal x 1 1 = if((head x)=='*')
 				then esComentarioGlobal (tail x) 2 1
 					else esComentarioGlobal (tail x) 1 1
 esComentarioGlobal x 2 1 = True
+
+esComentarioNormal :: String -> Int -> Bool
+esComentarioNormal x 2 = True
+esComentarioNormal x s =  if(s>2)
+		           then False
+			     else if((head x)== '/')
+				  then esComentarioNormal (tail x) (s+1)
+					else False
 
 
 

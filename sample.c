@@ -1,8 +1,5 @@
 
 /*hola mundo*/
-
-//esto es un comentario
-
 int main(void)
 {
 int p = 2000 ; 
