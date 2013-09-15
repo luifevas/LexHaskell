@@ -165,5 +165,18 @@ lexA :: String -> [(String, String)]
 lexA s = map (\x -> (x, analizar x)) $ analizado s
 
 imprimirTuplas :: (String,String)-> String
-imprimirTuplas (x,s) = x++","++s
+imprimirTuplas (x,s) = x++","++" "++" "++s
+
+esComentarioGlobal :: String -> Int -> Int -> Bool
+esComentarioGlobal x 0 0 = if((head x)== '/')
+				 then esComentarioGlobal (tail x) 1 0
+				 else False
+esComentarioGlobal x 1 0 = esComentarioGlobal (tail x) 1 1				
+esComentarioGlobal x 1 1 = if((head x)=='*')
+				then esComentarioGlobal (tail x) 2 1
+					else esComentarioGlobal (tail x) 1 1
+esComentarioGlobal x 2 1 = True
+
+
+
      		
