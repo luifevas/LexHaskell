@@ -7,6 +7,10 @@ main = do
    content <- readFile (ruta)
    let final = lexA content
    print final
+   let impresoInicial = map imprimirTuplas final
+   let impresoFinal = unlines impresoInicial	
+   writeFile ("analisis.txt")(impresoFinal)
+
    
 
 
@@ -160,4 +164,6 @@ analizado p = obtenerLexemes p 0 0 0
 lexA :: String -> [(String, String)]
 lexA s = map (\x -> (x, analizar x)) $ analizado s
 
- 	     		
+imprimirTuplas :: (String,String)-> String
+imprimirTuplas (x,s) = x++","++s
+     		
