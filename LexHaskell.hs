@@ -41,7 +41,7 @@ obtenerLexemes s cant ban tipo =
 		then obtenerLexemes s (cant+1) 0 1
 	else if(cant>0)
 		then 
-			if(((s!!0==s!!cant &&(s!!0=='&' || s!!0=='|')) || s!!0=='<' || s!!0=='>' || s!!0=='!' || s!!0=='+' || s!!0=='-') || cant==1)
+			if(((s!!0==s!!(cant-1) &&(s!!0=='&' || s!!0=='|' || s!!0=='=')) || s!!0=='<' || s!!0=='>' || s!!0=='!' || s!!0=='+' || s!!0=='-') || cant==1)
 				then [take (cant) (s)] ++ obtenerLexemes (drop cant s) 0 0 0
 			else [take (cant-1) s] ++ obtenerLexemes (drop (cant-1) s ) 0 0 0
 	else obtenerLexemes (tail s) 0 0 0			
