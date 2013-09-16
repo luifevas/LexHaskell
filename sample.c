@@ -4,6 +4,7 @@
 int main(void)
 {
 int p = 2000 ; 
+int p = 5000 ; 
 short int q = -120 ; 
 unsigned short int r = 121 ; 
 float s = 21.566578 ; 

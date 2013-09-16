@@ -8,8 +8,15 @@ main = do
    let final = lexA content
    print final
    let impresoInicial = map imprimirTuplas final
-   let impresoFinal = unlines impresoInicial	
+   let impresoFinal = unlines impresoInicial
+   let tablasInicial = map tablaIdentificador final
+   print tablasInicial
+   let tablasSinRepetidos = removerDuplicado tablasInicial 
+   print tablasSinRepetidos
+   let tablasSinRepetidos2 = tail tablasSinRepetidos
+   let tablasFinal = unlines tablasSinRepetidos2
    writeFile ("analisis.txt")(impresoFinal)
+   writeFile ("identificadores.txt")(tablasFinal)
 
    
 
@@ -196,4 +203,22 @@ esComentarioNormal x s =
     if(x!!0== '/' && x!!1=='/')
 		then True
 	else False
-	
+
+
+
+tablaIdentificador :: (String, String) -> String
+tablaIdentificador (x,s) = if(s == "IDENTIFICADOR")
+				then x
+				   else "\n"
+				  
+eliminarRepetidos :: [String]-> Int-> [String]
+eliminarRepetidos s cant =  
+                            if(cant >= (length s))
+			      then s   
+		                else if(elem (s!!cant) s )
+			             then eliminarRepetidos (tail s) (cant)
+                                        else eliminarRepetidos s (cant+1) 
+ 
+removerDuplicado:: [String] -> [String]
+removerDuplicado [] = []
+removerDuplicado (x:xs) = x : removerDuplicado (filter (\y -> not(x == y)) xs)
