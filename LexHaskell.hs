@@ -6,13 +6,56 @@ main = do
    ruta <- getLine
    content <- readFile (ruta)
    let final = lexA content
+   let b = (calcularParentesis final 0)&&(calcularCorchetes final 0)&&(calcularLlaves final 0)
+   print b
    print final
    let impresoInicial = map imprimirTuplas final
    let impresoFinal = unlines impresoInicial	
    writeFile ("analisis.txt")(impresoFinal)
 
-   
+calcularParentesis ::[([Char],[Char])] -> Int -> Bool
+calcularParentesis [] cant = 
+	if(cant==0)
+		then True
+		else False
+calcularParentesis s cant = calcularParentesis (tail s) (cant+(obtenerParentesis (head s)))
 
+calcularCorchetes ::[([Char],[Char])] -> Int -> Bool
+calcularCorchetes [] cant = 
+	if(cant==0)
+		then True
+		else False
+calcularCorchetes s cant = calcularCorchetes (tail s) (cant+(obtenerCorchetes (head s)))
+
+calcularLlaves ::[([Char],[Char])] -> Int -> Bool
+calcularLlaves [] cant = 
+	if(cant==0)
+		then True
+		else False
+calcularLlaves s cant = calcularLlaves (tail s) (cant+(obtenerLlaves (head s)))
+   
+obtenerParentesis :: ([Char],[Char]) -> Int
+obtenerParentesis (s,x) =
+	if(s=="(")
+		then 1
+	else if(s==")")
+		then -1
+	else 0
+obtenerCorchetes :: (String,String) -> Int
+obtenerCorchetes (s,x) =
+	if(s=="[")
+		then 1
+	else if(s=="]")
+		then -1
+	else 0
+	
+obtenerLlaves :: (String,String) -> Int 
+obtenerLlaves (s,x) =
+	if(s=="{")
+		then 1
+	else if(s=="}")
+		then -1
+	else 0
 
 obtenerLexemes :: String -> Int -> Int-> Int -> [String]
 obtenerLexemes "" cant ban tipo = []

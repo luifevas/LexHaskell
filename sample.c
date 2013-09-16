@@ -3,6 +3,8 @@
 //hola
 int main(void)
 {
+x+=1;
+a = x-- + 5
 int p = 2000 ; 
 short int q = -120 ; 
 unsigned short int r = 121 ; 
